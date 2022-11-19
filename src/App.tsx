@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { colorRange, DrawSquare } from "./DrawSquare";
 
 function App() {
+  const [stepSize, setStepSize] = useState<number>(0);
+  const [startingColor, setStartingColor] = useState<colorRange>(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <input
+        data-testid="stepSizeInput"
+        type="number"
+        placeholder="Enter StepSize"
+        onChange={(e) => {
+          setStepSize(parseInt(e.target.value));
+        }}
+      />
+      <input
+        data-testid="startingColotInput"
+        type="number"
+        placeholder="Enter Starting Color"
+        max={15}
+        onChange={(e) => {
+          const val = parseInt(e.target.value);
+          if (!isNaN(val) && val < 16) {
+            setStartingColor(parseInt(e.target.value) as colorRange);
+          }
+        }}
+      />
+      <DrawSquare stepSize={stepSize} startingColor={startingColor} />
+    </>
   );
 }
 
